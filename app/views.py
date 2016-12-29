@@ -6,7 +6,7 @@ import urllib2
 from flask import render_template, flash, redirect
 from flask_autoindex import AutoIndex
 
-files_index = AutoIndex(app, os.path.curdir + '/app/reports', add_url_rules=False)
+files_index = AutoIndex(app, os.path.curdir + '/autoindex', add_url_rules=False)
 
 @app.route("/")
 @app.route("/index")
