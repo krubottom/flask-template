@@ -25,11 +25,9 @@ def autoindex(path):
 
 @app.route("/form", methods=['GET', 'POST'])
 def form():
-	form = CameraInfo()
+	form = PageForm()
 	if form.validate_on_submit():
 		# flash('IP Address: %s' % (form.FormCameraAddress.data))
-		CameraFirmware = axislib.GetAxisFirmwareVersion(form.FormCameraAddress.data, form.FormCameraPasswd.data)
-		CameraTemp = axislib.GetAxisTemp(form.FormCameraAddress.data,form.FormCameraPasswd.data)
-		CameraModel = axislib.GetAxisCameraModel(form.FormCameraAddress.data,form.FormCameraPasswd.data)
-		return render_template('camerainfo.html', title='Camera Info', firmware=CameraFirmware, temp=CameraTemp, model=CameraModel)
-	return render_template('cameraview.html', title='Camera View', form=form)
+		FormTextField = form.FormTextField.data
+		return render_template('formreturn.html', title='Form Return', textfield=FormTextField)
+	return render_template('formentry.html', title='Form Entry', form=form)

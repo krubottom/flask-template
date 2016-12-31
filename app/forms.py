@@ -5,5 +5,5 @@ from wtforms.validators import DataRequired
 
 
 class PageForm(Form):
-    FormCameraAddress = StringField('FormCameraAddress', validators=[DataRequired()])
+    FormTextField = StringField('FormTextField', validators=[DataRequired()])
     #remember_me = BooleanField('remember_me', default=False)
