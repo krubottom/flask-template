@@ -5,7 +5,7 @@ import json
 import urllib2
 from flask import render_template, flash, redirect
 from flask_autoindex import AutoIndex
-from .forms import CameraInfo
+from .forms import PageForm
 
 # import sys
 # sys.path.append('../python')
