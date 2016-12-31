@@ -5,6 +5,11 @@ import json
 import urllib2
 from flask import render_template, flash, redirect
 from flask_autoindex import AutoIndex
+from .forms import CameraInfo
+
+# import sys
+# sys.path.append('../python')
+# import axislib
 
 files_index = AutoIndex(app, os.path.curdir + '/autoindex', add_url_rules=False)
 
