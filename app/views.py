@@ -3,13 +3,13 @@ import os.path
 import socket
 import json
 import urllib2
-from flask import render_template, flash, redirect
+from flask import render_template, flash, redirect, url_for
 from flask_autoindex import AutoIndex
 from .forms import PageForm
 
 # import sys
 # sys.path.append('../python')
-# import axislib
+# import lib
 
 files_index = AutoIndex(app, os.path.curdir + '/autoindex', add_url_rules=False)
 
@@ -31,3 +31,12 @@ def form():
 		FormTextField = form.FormTextField.data
 		return render_template('formreturn.html', title='Form Return', textfield=FormTextField)
 	return render_template('formentry.html', title='Form Entry', form=form)
+
+@app.route("/site-map")
+def site_map():
+	links = []
+	for rule in app.url_map.iter_rules():
+		if len(rule.defaults) >= len(rule.arguments):
+			url = url_for(rule.endpoint, **(rule.defaults or {}))
+			links.append((url, rule.endpoint))
+	return render_template("site_map.html", links=links)
