@@ -36,7 +36,8 @@ def form():
 def site_map():
 	links = []
 	for rule in app.url_map.iter_rules():
-		if len(rule.defaults) >= len(rule.arguments):
+		# if len(rule.defaults) >= len(rule.arguments):
+		# if autoindex not in url_for(rule.defaults):
 			url = url_for(rule.endpoint, **(rule.defaults or {}))
 			links.append((url, rule.endpoint))
 	return render_template("site_map.html", links=links)
