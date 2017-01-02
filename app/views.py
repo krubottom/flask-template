@@ -72,6 +72,7 @@ def form():
 def site_map():
     return render_template("site_map.html", links=site_map_links())
 
+# RESTful API example will go here, doesn't do anything yet
 @app.route("/api")
 def api():
 	return "api"
