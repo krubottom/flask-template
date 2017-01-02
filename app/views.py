@@ -72,9 +72,9 @@ def form():
 def site_map():
     return render_template("site_map.html", links=site_map_links())
 
-#
+
 # @app.route("/nav")
-# def map():
+# def nav():
 # 	links = site_map_links()
 # 	return render_template("nav.html", links=links)
 

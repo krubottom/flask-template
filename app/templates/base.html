@@ -1,13 +1,19 @@
 
 <!DOCTYPE HTML>
 <html>
+<link rel="stylesheet" href="static/hor_nav/styles.css" type="text/css" />
 <head>
 	<meta charset="UTF-8">
 	<title>{{ title }}</title>
-	Site Map:
-	{% for url, endpoint in links %}
-	<a href="{{ url }}">{{ endpoint }}</a>
-	{% endfor %}
+
+	<ul id="navmenu">
+
+	  {% for url, endpoint in links %}
+	  <li><a href="{{ url }}">{{ endpoint }}</a></li>
+	  {% endfor %}
+
+	</ul>
+
 </head>
 <body>
 	      {% block content %}
