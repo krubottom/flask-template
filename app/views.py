@@ -4,14 +4,11 @@ import socket
 import json
 import urllib2
 from flask import render_template, flash, redirect, url_for, abort, send_file
-# from flask_autoindex import AutoIndex
 from .forms import PageForm
 
 # import sys
 # sys.path.append('../libs')
 # import lib
-
-# files_index = AutoIndex(app, os.path.curdir + '/autoindex', add_url_rules=False)
 
 @app.route("/")
 @app.route("/index")
@@ -37,8 +34,8 @@ def dir_listing(req_path):
 
     # Check if path is a file and serve
     if os.path.isfile(abs_path):
-		return "req_path: " + req_path + "<br><br>abs_path: " + abs_path
-        # return send_file(abs_path)
+		# return "req_path: " + req_path + "<br><br>abs_path: " + abs_path
+		return send_file('files/' + req_path)
 		# return send_file(BASE_DIR + req_path)
 
     # Show directory contents
@@ -49,7 +46,6 @@ def dir_listing(req_path):
 def form():
 	form = PageForm()
 	if form.validate_on_submit():
-		# flash('IP Address: %s' % (form.FormCameraAddress.data))
 		FormTextField = form.FormTextField.data
 		return render_template('formreturn.html', title='Form Return', textfield=FormTextField)
 	return render_template('formentry.html', title='Form Entry', form=form)
