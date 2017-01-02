@@ -10,10 +10,12 @@ from .forms import PageForm
 # sys.path.append('../libs')
 # import lib
 
+# Return a generic static HTML page
 @app.route("/")
 def index():
 	return render_template('index.html', title='Home')
 
+# Show directory of files for download
 # Removing AutoIndex, still needs lots of fixes
 @app.route('/files/', defaults={'req_path': ''})
 @app.route('/files/<path:req_path>')
@@ -37,6 +39,7 @@ def files(req_path):
     files = os.listdir(abs_path)
     return render_template('files.html', files=files)
 
+# Example form
 @app.route("/form", methods=['GET', 'POST'])
 def form():
 	form = PageForm()
@@ -45,6 +48,7 @@ def form():
 		return render_template('formreturn.html', title='Form Return', textfield=FormTextField)
 	return render_template('formentry.html', title='Form Entry', form=form)
 
+# Generates page with a list of all @app.route's
 @app.route("/site-map")
 def site_map():
     links = []
