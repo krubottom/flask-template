@@ -3,8 +3,11 @@ import os.path
 import socket
 import json
 import urllib2
-from flask import render_template, flash, redirect, url_for, abort, send_file
+from flask import render_template, flash, redirect, url_for, abort, send_file, request
+from werkzeug import secure_filename
 from .forms import PageForm
+
+app.config['UPLOAD_FOLDER'] = 'app/upload'
 
 # import sys
 # sys.path.append('../libs')
@@ -40,9 +43,16 @@ def files(req_path):
     return render_template('files.html', files=files)
 
 # Uploading files
-@app.route("/upload", methods=['GET', 'POST'])
+@app.route('/upload')
 def upload():
-	
+	return render_template('upload.html')
+
+@app.route('/uploader', methods = ['GET', 'POST'])
+def upload_file():
+	if request.method == 'POST':
+		f = request.files['file']
+		f.save(secure_filename(f.filename))
+	return 'file uploaded successfully'
 
 # Example form
 @app.route("/form", methods=['GET', 'POST'])
@@ -65,3 +75,12 @@ def site_map():
 			links.append((url, rule.endpoint))
 
     return render_template("site_map.html", links=links)
+
+
+
+restdb = [
+	{
+		'id': 1,
+
+	}
+]
