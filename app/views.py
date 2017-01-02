@@ -14,7 +14,7 @@ from .forms import PageForm
 # Return a generic static HTML page as base page
 @app.route("/")
 def index():
-	return render_template('index.html', title='Home')
+	return render_template('index.html', title='Home', links=site_map_links())
 
 # Show directory of files for download
 # Removing AutoIndex, still needs lots of fixes
@@ -38,9 +38,10 @@ def files(req_path):
 
     # Show directory contents
     files = os.listdir(abs_path)
-    return render_template('files.html', files=files)
+    return render_template('files.html', files=files, links=site_map_links())
 
 # Uploading files
+# Upload path is set in config.py
 @app.route('/upload', methods = ['GET', 'POST'])
 def upload():
 	if request.method == 'POST':
@@ -54,9 +55,8 @@ def upload():
 		if file:
 			filename = secure_filename(file.filename)
 			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-			# return redirect(url_for('uploaded_file',filename=filename))
 			return filename + " uploaded"
-	return render_template('upload.html')
+	return render_template('upload.html', title="Upload File", links=site_map_links())
 
 # Example form
 @app.route("/form", methods = ['GET', 'POST'])
@@ -64,22 +64,19 @@ def form():
 	form = PageForm()
 	if form.validate_on_submit():
 		FormTextField = form.FormTextField.data
-		return render_template('formreturn.html', title='Form Return', textfield=FormTextField)
-	return render_template('formentry.html', title='Form Entry', form=form)
+		return render_template('formreturn.html', title='Form Return', textfield=FormTextField, links=site_map_links())
+	return render_template('formentry.html', title='Form Entry', form=form, links=site_map_links())
 
 # Generates page with a list of all @app.route's
 @app.route("/site-map")
 def site_map():
-    links = []
-    for rule in app.url_map.iter_rules():
-        # Filter out rules we can't navigate to in a browser
-        # and rules that require parameters
-		if "GET" in rule.methods and len(rule.arguments)==0:
-			url = url_for(rule.endpoint, **(rule.defaults or {}))
-			links.append((url, rule.endpoint))
+    return render_template("site_map.html", links=site_map_links())
 
-    return render_template("site_map.html", links=links)
-
+#
+# @app.route("/nav")
+# def map():
+# 	links = site_map_links()
+# 	return render_template("nav.html", links=links)
 
 
 restdb = [
@@ -88,3 +85,13 @@ restdb = [
 
 	}
 ]
+
+def site_map_links():
+	links = []
+	for rule in app.url_map.iter_rules():
+		# Filter out rules we can't navigate to in a browser
+		# and rules that require parameters
+		if "GET" in rule.methods and len(rule.arguments)==0:
+			url = url_for(rule.endpoint, **(rule.defaults or {}))
+			links.append((url, rule.endpoint))
+	return links

@@ -1,8 +1,13 @@
+
 <!DOCTYPE HTML>
 <html>
 <head>
 	<meta charset="UTF-8">
 	<title>{{ title }}</title>
+	Site Map: 
+	{% for url, endpoint in links %}
+	<a href="{{ url }}">{{ endpoint }}</a>
+	{% endfor %}
 </head>
 <body>
 	      {% block content %}{% endblock %}
