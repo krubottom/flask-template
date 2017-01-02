@@ -19,6 +19,7 @@ def has_no_empty_params(rule):
 def index():
 	return render_template('index.html', title='Home')
 
+# Removing AutoIndex, still needs lots of fixes
 @app.route('/files/', defaults={'req_path': ''})
 @app.route('/files/<path:req_path>')
 @app.route('/files')
