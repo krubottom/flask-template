@@ -10,7 +10,7 @@ from .forms import PageForm
 # sys.path.append('../libs')
 # import lib
 
-# Return a generic static HTML page
+# Return a generic static HTML page as base page
 @app.route("/")
 def index():
 	return render_template('index.html', title='Home')
@@ -38,6 +38,11 @@ def files(req_path):
     # Show directory contents
     files = os.listdir(abs_path)
     return render_template('files.html', files=files)
+
+# Uploading files
+@app.route("/upload", methods=['GET', 'POST'])
+def upload():
+	
 
 # Example form
 @app.route("/form", methods=['GET', 'POST'])
