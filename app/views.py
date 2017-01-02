@@ -52,7 +52,7 @@ def upload():
 		if file.filename == '':
 			flash('No selected file')
 			return redirect(request.url)
-		if file:
+		if file and allowed_file(file.filename):
 			filename = secure_filename(file.filename)
 			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 			return filename + " uploaded"
@@ -95,3 +95,6 @@ def site_map_links():
 			url = url_for(rule.endpoint, **(rule.defaults or {}))
 			links.append((url, rule.endpoint))
 	return links
+
+def allowed_file(filename):
+	return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
