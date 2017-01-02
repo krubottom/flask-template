@@ -10,19 +10,19 @@ from .forms import PageForm
 # sys.path.append('../libs')
 # import lib
 
+def has_no_empty_params(rule):
+    defaults = rule.defaults if rule.defaults is not None else ()
+    arguments = rule.arguments if rule.arguments is not None else ()
+    return len(defaults) >= len(arguments)
+
 @app.route("/")
-@app.route("/index")
 def index():
 	return render_template('index.html', title='Home')
 
-# @app.route('/autoindex/', defaults={'path': ''})
-# @app.route('/autoindex/<path:path>')
-# def autoindex(path):
-#     return files_index.render_autoindex(path)
-
 @app.route('/files/', defaults={'req_path': ''})
 @app.route('/files/<path:req_path>')
-def dir_listing(req_path):
+@app.route('/files')
+def files(req_path):
     BASE_DIR = 'app/files'
 
     # Joining the base and the requested path
@@ -36,7 +36,6 @@ def dir_listing(req_path):
     if os.path.isfile(abs_path):
 		# return "req_path: " + req_path + "<br><br>abs_path: " + abs_path
 		return send_file('files/' + req_path)
-		# return send_file(BASE_DIR + req_path)
 
     # Show directory contents
     files = os.listdir(abs_path)
@@ -52,9 +51,12 @@ def form():
 
 @app.route("/site-map")
 def site_map():
-	links = []
-	for rule in app.url_map.iter_rules():
-		if len(rule.defaults) >= len(rule.arguments):
+    links = []
+    for rule in app.url_map.iter_rules():
+        # Filter out rules we can't navigate to in a browser
+        # and rules that require parameters
+		if "GET" in rule.methods and len(rule.arguments)==0:
 			url = url_for(rule.endpoint, **(rule.defaults or {}))
 			links.append((url, rule.endpoint))
-	return render_template("site_map.html", links=links)
+
+    return render_template("site_map.html", links=links)
