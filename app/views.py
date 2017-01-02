@@ -72,19 +72,15 @@ def form():
 def site_map():
     return render_template("site_map.html", links=site_map_links())
 
+@app.route("/api")
+def api():
+	return "api"
+
 
 # @app.route("/nav")
 # def nav():
 # 	links = site_map_links()
 # 	return render_template("nav.html", links=links)
-
-
-restdb = [
-	{
-		'id': 1,
-
-	}
-]
 
 def site_map_links():
 	links = []
