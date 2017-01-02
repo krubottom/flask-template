@@ -18,15 +18,17 @@ hr {
 	margin-bottom:25px;
 	}
 
+/*
 a {
-	color: #900;
+	color: #000;
 	text-decoration: none;
 	}
 
 a:hover {
-	background: #900;
-	color: #FFF;
+	background: #FFF;
+	color: #000;
 	}
+*/
 
 /* Root = Horizontal, Secondary = Vertical */
 ul#navmenu {
@@ -173,4 +175,3 @@ ul#navmenu ul li.iehover ul,
 ul#navmenu ul ul li.iehover ul {
 	display: block;
 	}
-
