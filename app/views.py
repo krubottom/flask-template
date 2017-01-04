@@ -78,6 +78,17 @@ def api():
 	return "api"
 
 
+# Cookies
+# In progress, not working yet
+@app.route("/cookie")
+def cookie():
+	# # Set cookie
+	# resp = make_response(render_template(...))
+    # resp.set_cookie('username', 'the username')
+    # return resp
+	# # Get Cookie
+	# username = request.cookies.get('username')
+
 # @app.route("/nav")
 # def nav():
 # 	links = site_map_links()
