@@ -1,5 +1,5 @@
 from app import app
-import os.path
+import os
 import socket
 import json
 import urllib2
@@ -78,10 +78,15 @@ def api():
 	return "api"
 
 
+# Status page with simple checks
+@app.route("/status")
+def status():
+	return render_template("status.html", links=site_map_links(), netstatus=check_ping())
+
 # Cookies
 # In progress, not working yet
-@app.route("/cookie")
-def cookie():
+# @app.route("/cookie")
+# def cookie():
 	# # Set cookie
 	# resp = make_response(render_template(...))
     # resp.set_cookie('username', 'the username')
@@ -106,3 +111,13 @@ def site_map_links():
 
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
+
+def check_ping():
+    hostname = "8.8.8.8"
+    response = os.system("ping -c 1 " + hostname)
+    if response == 0:
+        netstatus = "Green"
+    else:
+        netstatus = "Red"
+
+    return netstatus
